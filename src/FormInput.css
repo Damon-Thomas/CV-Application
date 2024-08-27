@@ -1,0 +1,14 @@
+.formBasicInput {
+    display: flex;
+    flex-direction: column;
+    gap: .25em;
+    width: clamp(200px, calc((50vw - 5em) / 2), 600px);
+}
+
+.singleLineInput {
+    height: 1.25rem;
+}
+
+label {
+    font-weight: 400;
+}

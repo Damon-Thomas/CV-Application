@@ -1,0 +1,10 @@
+.formMultiLineInput {
+    display: flex;
+    flex-direction: column;
+    gap: .25em;
+}
+
+.multiLineInput {
+    width: clamp(200px, calc(50vw - 6em), 600px);
+    resize: none;
+}

@@ -1,0 +1,50 @@
+/* .dropDown {
+    height:3em;
+} */
+
+.dropDown > .shrunk{
+    display: none;
+    /* transform: scale(0); */
+    /* transition: all 600ms ease-in-out; */
+    font-size: 0;
+  }
+  .content{
+    display: block;
+    /* transition: all 600ms ease-in-out; */
+    /* transform: scale(1); */
+    transform-origin: top;
+    font-size: 1em;
+  }
+
+  .dropDown {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  
+  }
+  
+  .dropdownButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dropdownButton > .chevron, .dropdownButton > .dropEmpty {
+    width: 2em;
+    height: 2em;
+  }
+
+  .chevron {
+    display: block;
+    
+  }
+
+  .inactiveDD {
+    transform: rotate(0deg);
+    /* transition: all 300ms ease-in-out; */
+  }
+
+  .activeDD {
+    transform: rotate(180deg);
+    /* transition: transform 300ms ease-in-out; */
+  }
