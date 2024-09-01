@@ -1,4 +1,3 @@
-
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -6,17 +5,92 @@
   grid-template-columns: 1fr 1fr;
 }
 
+@media (max-width: 1349px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+
+@media print {
+
+    @page {
+      /* margin-top: 0;
+      margin-bottom: 0; */
+      margin: 0;
+    }
+    body {
+      /* padding-top: 72px;
+      padding-bottom: 72px ; */
+      -webkit-print-color-adjust: exact; /* Prevents color changes */
+        print-color-adjust: exact; /* For other browsers */
+      
+    }
+
+    
+
+  .main>.userOutput{
+    background-color: white;
+    margin: 0;
+    min-width: 100vw
+  }
+  .userOutput>.col2{
+    background-color: #213547;
+  }
+  
+  
+
+  .main>.noPrint {
+    display: none;
+  }
+
+  body>.main {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .userEntry {
-  padding: 1rem;
+  /* padding: 1rem; */
+  margin: 1em;
   display: flex;
   flex-direction: column;
   justify-items: center;
   gap: 1em;
+
 }
 
-.dropdownButton > h2 {
+.dropdownButton>h2 {
   font-size: 1.5rem;
   font-weight: 400;
+}
+
+.experienceContentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.createNewDropD {
+  width: 12em;
+}
+
+.experienceContentContainer h2 {
+  font-size: 1rem;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+
+.experienceContentContainer .formBasicInput {
+  width: clamp(200px, calc((50vw - 7em) / 2), 600px);
+}
+
+.experienceContentContainer .dropdownButton {
+  width: clamp((200px, calc(50vw - 6em), 600px));
+  justify-content: flex-start;
+  gap: 1em;
 }
 
 .content {
@@ -32,7 +106,8 @@
   font-weight: 600;
 }
 
-.idForm {
+.idForm,
+.experienceForm {
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
@@ -44,6 +119,57 @@
   justify-content: flex-start;
 }
 
+.userOutput {
+  margin: 1em;
+
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  background-color: rgb(227, 228, 230);
+}
+
+.col1 {
+  padding: calc(1em + .25vw);
+  display: flex;
+  flex-direction: column;
+  gap: calc(1em + .25vw);
+}
+
+
+.cvName {
+  padding: 0 0 1em 0;
+  border-bottom: 1px solid #213547;
+}
 
 
 
+.cvSummary {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.col2 {
+  padding: calc(1em + .1vw);
+  color: #ffffff;
+  background-color: #213547;
+}
+
+.col2 p,
+.col1 p {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+
+
+}
+
+.cvHeading {
+  margin-bottom: .25em;
+
+}
+
+.cvContactContent {
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
