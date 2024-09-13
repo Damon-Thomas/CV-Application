@@ -73,9 +73,7 @@
   gap: 1em;
 }
 
-.createNewDropD {
-  width: 12em;
-}
+
 
 .experienceContentContainer h2 {
   font-size: 1rem;
@@ -149,6 +147,28 @@
 
 }
 
+.cvAddressContainer, .cvPhoneContainer, .cvEmailContainer {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+.svgContainer {
+  width: 2rem;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+/* svg.contactIcon {
+  width: 1em;
+  height: calc(1em +.25vw) ;
+  height: 1em;
+  font-size: calc(1em +.25vw);
+} */
+.contactIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: white;
+}
 .col2 {
   padding: calc(1em + .1vw);
   color: #ffffff;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormInput from "./FormInput";
 import AddButton from "./AddButton";
 import Dropdown from "./dropdown";
+import "./ExperienceContent.css"
 
 // function ExperienceContent() {
 //   const [experience, setExperience] = useState([
@@ -32,20 +33,39 @@ import Dropdown from "./dropdown";
 // }
 
 
-function ExperienceContentForm(hidden) {
-
-  const [title, setTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [location, setLocation] = useState('');
-  const [date, setDate] = useState('');
+function ExperienceContentForm(hidden, jobs, setjobList, nextId, setnewNextId, setShrink, submitButton = true, ) {
+  const [title, setTitle] = useState('')
+  const [company, setCompany] = useState('')
+  const [location, setLocation] = useState('')
+  const [date, setDate] = useState('')
   
+
+  function saveHandler(e) {
+    e.preventDefault()
+    setjobList(...jobs,
+      {
+        id: nextId,
+        jobTitle: title,
+        jobCompany: company,
+        jobLocation: location,
+        jobDate: date
+      }
+    );
+    setnewNextId(nextId++)
+
+  }
+  const buttonOnCondition = () => {
+    if (submitButton === true) {
+      return (<button onClick={(e) => {saveHandler(e)}}>Save</button>)
+    }
+  }
   return (
     <div className={hidden ? "experienceForm hidden": "experienceForm"} >
       <FormInput labelText="Job Title" inputID="jobTitle" preValue={title} onChange={(event) => setTitle(event.target.value)} />
       <FormInput labelText="Company" inputID="company" preValue={company} onChange={(event) => setCompany(event.target.value)}/>
       <FormInput labelText="Location" inputID="location" preValue={location} onChange={(event) => setLocation(event.target.value)}/>
       <FormInput labelText="Date" inputID="date" preValue={date} onChange={(event) => setDate(event.target.value)} />
-      <button>Submit</button>
+      {buttonOnCondition()}
     </div>
   );
 }

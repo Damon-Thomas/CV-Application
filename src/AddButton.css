@@ -7,3 +7,34 @@
     display: none;
 }
 
+.subChevron {
+    height: 2em;
+    width: auto;
+}
+
+.createNewDropD {
+    display: flex;
+    align-items: center;
+    width: 25vw;
+    height: 3em;
+}
+
+.inactiveSC {
+    transform: rotate(0deg);
+    /* transition: all 300ms ease-in-out; */
+  }
+
+  .activeSC {
+    transform: rotate(180deg);
+    /* transition: transform 300ms ease-in-out; */
+  }
+
+  .experienceForm {
+    display: block;
+  }
+
+  .addExperienceButton > .shrunk {
+    display: none;
+  }
+
+

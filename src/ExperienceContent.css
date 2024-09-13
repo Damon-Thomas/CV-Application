@@ -1,3 +1,13 @@
-.ExperienceDD {
+.experienceForm> .formBasicInput {
     
+    width: clamp(200px, calc((50vw - 9em) / 2), 600px);
+      
+}
+
+.experienceForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1em;
+    padding: 1em;
 }
