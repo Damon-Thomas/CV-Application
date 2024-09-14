@@ -1,4 +1,4 @@
-.experienceForm> .formBasicInput {
+.addJobForm > .formBasicInput {
     
     width: clamp(200px, calc((50vw - 9em) / 2), 600px);
       
@@ -6,8 +6,27 @@
 
 .experienceForm {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
+    flex-direction: column;
     gap: 1em;
     padding: 1em;
 }
+
+.addJobForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1em;
+    
+}
+
+.submitJob {
+    width: calc(1em + 12.5vw);
+}
+
+/* .experienceDrop > .experienceForm {
+    display: flex;
+}
+
+.experienceDrop > .shrunk {
+    display: hidden;
+} */

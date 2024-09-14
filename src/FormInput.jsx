@@ -1,7 +1,8 @@
 import "./FormInput.css"
 
 function FormInput({setHook, labelText, inputID, preValue = ''}) {
- 
+  
+  
   return (
     <div className="formBasicInput">
       <label htmlFor={inputID}>{labelText}</label>

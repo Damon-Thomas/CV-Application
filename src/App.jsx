@@ -2,7 +2,7 @@ import "./App.css";
 import Dropdown from "./dropdown";
 import FormInput from "./FormInput";
 import LongFormInput from "./LongFormInput";
-import ExperienceContent from "./ExperienceContent";
+import ExperienceContentForm from "./ExperienceContent";
 import AddButton from "./AddButton";
 import { useState } from "react";
 
@@ -54,15 +54,26 @@ function summaryContent(summaryHook) {
     </div>
   );
 }
-
-function workContent(jobs, setjobList, nextId, setnewNextId, addExperienceShrink, setAddExperienceShrink) {
+//
+//
+// un nest add button. no components withing components
+function workContent(allJobs, setjobList, nextId, setnewNextId, addExperienceShrink, setAddExperienceShrink) {
+  // function handleAddClick() {
+  //   setAddExperienceShrink(!addExperienceShrink)
+  // }
+  console.log('first', allJobs)
   return (
     <div className="experienceInputContainer">
-      
+      <div className="experienceDrop">
+            {/* <div className="addExperienceButton"> */}
+                <AddButton textContent="Add Experience" shrink={addExperienceShrink} setShrink={setAddExperienceShrink} />
+                <div className={addExperienceShrink ? 'experienceForm' : 'shrunk experienceForm'}>
+                <ExperienceContentForm allJobs={allJobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/>
+                </div>
+            {/* </div> */}
+      </div>
+    </div>)
   
-  <AddButton textContent="Add Experience" jobs={jobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId} shrink={addExperienceShrink} setShrink={setAddExperienceShrink} />
-    </div>
-  )
 }
 
 
@@ -77,11 +88,23 @@ function App() {
   const [summary, setSummary] = useState(
     "I am a programmer just trying to find my way around this electric rock. I've learned so much. I'm still learning. This is just another step in my journey of knowledge. With great knowledge comes great power. With great power comes great responsibility. With great responsibility comes great failure."
   );
-  const [jobs, setjobList] = useState([])
+  
   const [addExperienceShrink, setAddExperienceShrink] = useState(false)
-  const [experienceShrink, setExperienceShrink] = useState(true)
+  // const [experienceShrink, setExperienceShrink] = useState(true)
   const [nextId, setnewNextId] = useState(0)
+  const [allJobs, setjobList] = useState(
+    [
+      {
+              id: '0a',
+              jobTitle: "Junior Developer",
+              company: "Fake Company inc.",
+              location: "Toronto, ON, Canada",
+              date: "Jan 2023 - Present",
+      }
+  ])
 
+  
+  
   // function sum(...theArgs) {
   //   let total = 0;
   //   for (const arg of theArgs) {
@@ -117,7 +140,7 @@ function App() {
           )}
         />
         <Dropdown text="Summary" content={summaryContent(setSummary)} />
-        <Dropdown text="Work Experience" content={workContent(jobs, setjobList, nextId, setnewNextId, addExperienceShrink, setAddExperienceShrink)} />
+        <Dropdown text="Work Experience" content={workContent(allJobs, setjobList, nextId, setnewNextId, addExperienceShrink, setAddExperienceShrink)} />
         <Dropdown text="Education" content={dropContent} />
         <Dropdown text="Skills" content={dropContent} />
       </div>

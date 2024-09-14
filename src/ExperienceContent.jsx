@@ -1,7 +1,5 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
-import AddButton from "./AddButton";
-import Dropdown from "./dropdown";
 import "./ExperienceContent.css"
 
 // function ExperienceContent() {
@@ -33,16 +31,19 @@ import "./ExperienceContent.css"
 // }
 
 
-function ExperienceContentForm(hidden, jobs, setjobList, nextId, setnewNextId, setShrink, submitButton = true, ) {
+function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submitButton = true,}) {
   const [title, setTitle] = useState('')
   const [company, setCompany] = useState('')
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
-  
 
   function saveHandler(e) {
     e.preventDefault()
-    setjobList(...jobs,
+    console.log('prop received', allJobs)
+
+    setjobList(
+      [
+        ...allJobs,
       {
         id: nextId,
         jobTitle: title,
@@ -50,24 +51,46 @@ function ExperienceContentForm(hidden, jobs, setjobList, nextId, setnewNextId, s
         jobLocation: location,
         jobDate: date
       }
+    ]
     );
-    setnewNextId(nextId++)
+    setnewNextId(nextId + 1)
+    // console.log('id count', allJobs.nextId)
 
   }
-  const buttonOnCondition = () => {
+  function buttonOnCondition() {
     if (submitButton === true) {
-      return (<button onClick={(e) => {saveHandler(e)}}>Save</button>)
+      return (<button formTarget="addJobForm" className="submitJob" onClick={(e) => {
+        saveHandler(e);
+        resetForm()
+        console.log('on click', allJobs)
+      }}>
+        Save
+        </button>)
     }
   }
+
+  function resetForm() {
+    console.log(document.getElementById("addJobForm"))
+    document.getElementById("addJobForm").reset()
+
+  }
+
+ // reset form on submit. have to reset each form value inividually
+ //add dropdowns of position
+
   return (
-    <div className={hidden ? "experienceForm hidden": "experienceForm"} >
-      <FormInput labelText="Job Title" inputID="jobTitle" preValue={title} onChange={(event) => setTitle(event.target.value)} />
-      <FormInput labelText="Company" inputID="company" preValue={company} onChange={(event) => setCompany(event.target.value)}/>
-      <FormInput labelText="Location" inputID="location" preValue={location} onChange={(event) => setLocation(event.target.value)}/>
-      <FormInput labelText="Date" inputID="date" preValue={date} onChange={(event) => setDate(event.target.value)} />
+    // <div className={hidden ? "experienceForm hidden": "experienceForm"} >
+     <> 
+      <form action="" className="addJobForm" id="addJobForm">
+        <FormInput setHook={setTitle} labelText="Job Title" inputID="jobTitle" preValue={title}  />
+        <FormInput setHook={setCompany} labelText="Company" inputID="company" preValue={company} />
+        <FormInput setHook={setLocation} labelText="Location" inputID="location" preValue={location} />
+        <FormInput setHook={setDate} labelText="Date" inputID="date" preValue={date}/>
+      </form>
       {buttonOnCondition()}
-    </div>
+    </>
+    //  </div>
   );
 }
 
-export default ExperienceContentForm;
+export default ExperienceContentForm

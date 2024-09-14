@@ -1,13 +1,11 @@
-import ExperienceContentForm from "./ExperienceContent"
-import { useState } from "react"
+
 import "./AddButton.css"
 import Icon from "@mdi/react"
 import { mdiChevronDown } from '@mdi/js';
 
 
-function AddButton({textContent, jobs, setjobList, nextId, setnewNextId, shrink, setShrink}) {
+function AddButton({textContent, shrink, setShrink}) {
 
-    
     
     function handleAddClick() {
         setShrink(!shrink)
@@ -15,17 +13,17 @@ function AddButton({textContent, jobs, setjobList, nextId, setnewNextId, shrink,
     
     return (
 
-        <div className="experienceDrop">
-            <div className="addExperienceButton">
+        // <div className="experienceDrop">
+            // <div className="addExperienceButton">
                 <button className="createNewDropD" onClick={handleAddClick}>
                     <Icon path={mdiChevronDown} className={shrink ? 'inactiveSC subChevron' : 'activeSC subChevron'} />
                     {textContent}
                 </button>
-                <div className={shrink ? 'experienceForm' : 'shrunk experienceForm'}><ExperienceContentForm hidden={shrink} jobs={jobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/></div>
-            </div>
+        //         <div className={shrink ? 'experienceForm' : 'shrunk experienceForm'}><ExperienceContentForm hidden={shrink} jobs={allJobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/></div>
+        //     </div>
 
 
-        </div>
+        // </div>
         
     )
     
