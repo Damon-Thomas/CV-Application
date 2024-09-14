@@ -39,7 +39,7 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
 
   function saveHandler(e) {
     e.preventDefault()
-    console.log('prop received', allJobs)
+  
 
     setjobList(
       [
@@ -54,7 +54,7 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
     ]
     );
     setnewNextId(nextId + 1)
-    // console.log('id count', allJobs.nextId)
+    console.log('id count', allJobs.nextId, 'job list', allJobs)
 
   }
   function buttonOnCondition() {
@@ -62,7 +62,7 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
       return (<button formTarget="addJobForm" className="submitJob" onClick={(e) => {
         saveHandler(e);
         resetForm()
-        console.log('on click', allJobs)
+       
       }}>
         Save
         </button>)
@@ -70,8 +70,10 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
   }
 
   function resetForm() {
-    console.log(document.getElementById("addJobForm"))
-    document.getElementById("addJobForm").reset()
+    setTitle('')
+    setCompany('')
+    setLocation('')
+    setDate('')
 
   }
 
@@ -82,10 +84,10 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
     // <div className={hidden ? "experienceForm hidden": "experienceForm"} >
      <> 
       <form action="" className="addJobForm" id="addJobForm">
-        <FormInput setHook={setTitle} labelText="Job Title" inputID="jobTitle" preValue={title}  />
-        <FormInput setHook={setCompany} labelText="Company" inputID="company" preValue={company} />
-        <FormInput setHook={setLocation} labelText="Location" inputID="location" preValue={location} />
-        <FormInput setHook={setDate} labelText="Date" inputID="date" preValue={date}/>
+        <FormInput setHook={setTitle} labelText="Job Title" inputID="jobTitle"  hookValue={title}  />
+        <FormInput setHook={setCompany} labelText="Company" inputID="company"  hookValue={company} />
+        <FormInput setHook={setLocation} labelText="Location" inputID="location"  hookValue={location} />
+        <FormInput setHook={setDate} labelText="Date" inputID="date" hookValue={date}/>
       </form>
       {buttonOnCondition()}
     </>
