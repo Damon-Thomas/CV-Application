@@ -79,44 +79,7 @@ function summaryContent(summaryHook) {
 //
 //
 // un nest add button. no components withing components
-function workContent(
-  allJobs,
-  setjobList,
-  nextId,
-  setnewNextId,
-  addExperienceShrink,
-  setAddExperienceShrink
-) {
-  // function handleAddClick() {
-  //   setAddExperienceShrink(!addExperienceShrink)
-  // }
 
-  return (
-    <div className="experienceInputContainer">
-      <div className="experienceDrop">
-        {/* <div className="addExperienceButton"> */}
-        <AddButton
-          textContent="Add Experience"
-          shrink={addExperienceShrink}
-          setShrink={setAddExperienceShrink}
-        />
-        <div
-          className={
-            addExperienceShrink ? "experienceForm" : "shrunk experienceForm"
-          }
-        >
-          <ExperienceContentForm
-            allJobs={allJobs}
-            setjobList={setjobList}
-            nextId={nextId}
-            setnewNextId={setnewNextId}
-          />
-        </div>
-        {/* </div> */}
-      </div>
-    </div>
-  );
-}
 
 // take out default state and apply them to html conditionally
 function App() {
@@ -135,10 +98,24 @@ function App() {
     {
       id: "0a",
       jobTitle: "Junior Developer",
-      company: "Fake Company inc.",
-      location: "Toronto, ON, Canada",
-      date: "Jan 2023 - Present",
+      jobCompany: "Fake Company inc.",
+      jobLocation: "Toronto, ON, Canada",
+      jobDate: "Jan 2023 - Present",
     },
+    {
+      id: "0b",
+      jobTitle: "CEO of Computer Things",
+      jobCompany: "The Company of Computers and Things",
+      jobLocation: "Paris, France",
+      jobDate: "1967 - 2023",
+    },
+    {
+      id: "0c",
+      jobTitle: "Burger Flipper",
+      jobCompany: "McBurgers and McComputers",
+      jobLocation: "San Jose, CA, USA",
+      jobDate: "1923 - 1965",
+    }
   ]);
 
   // function sum(...theArgs) {
@@ -149,6 +126,51 @@ function App() {
   //   return total;
   // }
   // populate headings only if there is some content entered
+
+  function workContent(
+    allJobs,
+    setjobList,
+    nextId,
+    setnewNextId,
+    addExperienceShrink,
+    setAddExperienceShrink
+  ) {
+    // function handleAddClick() {
+    //   setAddExperienceShrink(!addExperienceShrink)
+    // }
+  
+    return (
+      <div className="experienceInputContainer">
+        <div className="experienceDrop">
+          <AddButton
+            textContent="Add Experience"
+            shrink={addExperienceShrink}
+            setShrink={setAddExperienceShrink}
+          />
+          <div
+  
+            className={
+              addExperienceShrink ? "experienceForm" : "shrunk experienceForm"
+            }
+          >
+            <ExperienceContentForm
+              allJobs={allJobs}
+              setjobList={setjobList}
+              nextId={nextId}
+              setnewNextId={setnewNextId}
+              shrink={addExperienceShrink}
+              setShrink={setAddExperienceShrink}
+            />
+          </div> 
+        </div>
+        <div className="experienceEditsDDs">
+          {createExperienceDD()}
+        </div>
+      </div>
+    );
+  }
+
+  
   function createHeading(headingText, ...blankCheck) {
     const hasValue = (obj, value) => Object.values(obj).includes(value);
 
@@ -219,6 +241,100 @@ function App() {
     );
   }
 
+  function jobDropDownHTML(job, company) {
+    return (
+      <div className="jobDD">
+        <h3 className="jobDDTitle">{job}</h3>
+        <h5 className="jobDDCompany">{company}</h5>
+      </div>
+    )
+  }
+
+  function findIDIndex(id) {
+    if(id != '') {
+      let k = "id";
+      let val = id;
+      let objIndex = allJobs.findIndex(
+        (job) => job[k] === val
+  );
+    return objIndex
+  }
+  }
+
+  function editJob(selectedID, editTitle, editCompany, editLocation, editDate) {
+    let jobIndex = findIDIndex(selectedID)
+    let newJobs = [...allJobs]
+    newJobs[jobIndex] = {
+        id: selectedID,
+        jobTitle: editTitle,
+        jobCompany: editCompany,
+        jobLocation: editLocation,
+        jobDate: editDate
+    }
+
+    setjobList(newJobs)
+  }
+
+  function experienceDropdownEditForm(inputID, editTitle, editCompany, editLocation, editDate) {
+    return (
+      <div className="expDDFs">
+        <div className="formBasicInput">
+          <label htmlFor={inputID + 'edit'}>{"Job Title"}</label>
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editTitle} onChange={(event) => editJob(selectedID, event.target.value, editCompany, editLocation, editDate)} />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + 'edit'}>{"Company"}</label>
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editCompany} onChange={(event) => editJob(selectedID, editTitle, event.target.value, editLocation, editDate)} />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + 'edit'}>{"Location"}</label>
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editLocation} onChange={(event) => editJob(selectedID, editTitle, editCompany, event.target.value, editDate)} />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + 'edit'}>{"Date"}</label>
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editDate} onChange={(event) => editJob(selectedID, editTitle, editCompany, editLocation, event.target.value)} />
+        </div>
+      </div>
+    )
+  }
+
+  function createExperienceDD() {
+    return (
+      <ul>
+        {allJobs.map(job => (
+          <li key={job.name + job.company}>
+            <Dropdown
+              text={jobDropDownHTML(job.name, job.company)}
+              content={experienceDropdownEditForm(job.id, job.jobTitle, job.jobCompany, job.jobLocation, job.jobDate)}
+              />
+          </li>
+        ))}
+
+      </ul>
+    )
+  }
+
+  function createExperienceCVContent() {
+
+    return (
+      <ul className="cvJobBodyContainer">
+        {allJobs.map(job => (
+          
+          <li key={'cv' + job.id} className="cvJobLi" >
+            {console.log(job)}
+            <h3 className="cvJobTitle">{job.jobTitle}</h3>
+            <h4 className="cvCompanyName">{job.jobCompany}</h4>
+            <div className="cvBottomLine">
+              <p className="cvLocation">{job.jobLocation}</p>
+              <p className="cvDate">{job.jobDate}</p>
+            </div>
+          </li>
+        ))}
+
+      </ul>
+    )
+  }
+
   return (
     <div className="main">
       {/* Left Side - User Entry Dropdowns */}
@@ -277,7 +393,14 @@ function App() {
               )}
             </p>
           </div>
-          <div className="cvWorkHistory"></div>
+          <div className="cvWorkHistory">
+            <h2 className="cvHeading">
+              {createHeading("Experience", { allJobs })}
+            </h2>
+            <div className="workHistoryBody">
+              {createExperienceCVContent()}
+            </div>
+          </div>
         </div>
 
         <div className="col2">

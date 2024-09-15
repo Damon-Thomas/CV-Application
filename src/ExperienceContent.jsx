@@ -31,16 +31,35 @@ import "./ExperienceContent.css"
 // }
 
 
-function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submitButton = true,}) {
+function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, setShrink, shrink}) {
   const [title, setTitle] = useState('')
   const [company, setCompany] = useState('')
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
+//   let objIndex
+//   if(id != '') {
+//     let k = "id";
+//     let val = id;
+//     objIndex = allJobs.findIndex(
+//       (job) => job[k] === val
+// );
+//   let selectedJob = allJobs[objIndex]
+//   setTitle(selectedJob.jobTitle)
+//   setCompany(selectedJob.jobCompany)
+//   setLocation(selectedJob.jobLocation)
+//   setDate(selectedJob.jobDate)
+
+//   }
+
+ 
+
+
+  function shrinkForm() {
+    setShrink(!shrink)
+  }
 
   function saveHandler(e) {
     e.preventDefault()
-  
-
     setjobList(
       [
         ...allJobs,
@@ -54,7 +73,8 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
     ]
     );
     setnewNextId(nextId + 1)
-    console.log('id count', allJobs.nextId, 'job list', allJobs)
+    shrinkForm()
+    
 
   }
   function buttonOnCondition() {
@@ -69,7 +89,11 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
     }
   }
 
+ 
+  
+
   function resetForm() {
+    
     setTitle('')
     setCompany('')
     setLocation('')
@@ -89,7 +113,21 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, submi
         <FormInput setHook={setLocation} labelText="Location" inputID="location"  hookValue={location} />
         <FormInput setHook={setDate} labelText="Date" inputID="date" hookValue={date}/>
       </form>
-      {buttonOnCondition()}
+      <div className="buttonContainer">
+        <button formTarget="addJobForm" className="submitJob" onClick={(e) => {
+          saveHandler(e);
+          resetForm()
+        }}>
+          Save
+        </button>
+        <button formTarget="addJobForm" className="cancelJob" onClick={(e) => {
+          e.preventDefault()
+          shrinkForm()
+          resetForm()
+        }}>
+          Cancel
+        </button>
+      </div>
     </>
     //  </div>
   );

@@ -200,3 +200,34 @@
 .experienceDrop .shrunk {
   display: none;
 }
+
+.cvJobBodyContainer{
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  /* padding-top: .5em; */
+}
+.cvJobLi {
+  list-style-type: none;
+}
+
+.cvJobTitle{
+  font-size: 1.5em;
+  font-weight: 800;
+}
+
+.cvCompanyName{
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.cvBottomLine{
+  display: flex;
+  justify-content: space-between;
+}
+
+.cvLocation, .cvDate {
+  font-size: 1em;
+}
+
+
