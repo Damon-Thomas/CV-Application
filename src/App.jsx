@@ -91,7 +91,7 @@ function App() {
   const [address, setAddress] = useState("$$PREValue$$");
   const [summary, setSummary] = useState("$$PREValue$$");
 
-  const [addExperienceShrink, setAddExperienceShrink] = useState(false);
+  const [addExperienceShrink, setAddExperienceShrink] = useState(["AC", '']);
   // const [experienceShrink, setExperienceShrink] = useState(true)
   const [nextId, setnewNextId] = useState(0);
   const [allJobs, setjobList] = useState([
@@ -126,6 +126,14 @@ function App() {
   //   return total;
   // }
   // populate headings only if there is some content entered
+  function addExpShrinkHandler() {
+    if (addExperienceShrink[1] === 'add') {
+      return true
+    }
+    else {
+      return false
+    }
+  }
 
   function workContent(
     allJobs,
@@ -135,9 +143,6 @@ function App() {
     addExperienceShrink,
     setAddExperienceShrink
   ) {
-    // function handleAddClick() {
-    //   setAddExperienceShrink(!addExperienceShrink)
-    // }
   
     return (
       <div className="experienceInputContainer">
@@ -150,7 +155,7 @@ function App() {
           <div
   
             className={
-              addExperienceShrink ? "experienceForm" : "shrunk experienceForm"
+              addExpShrinkHandler() ? "experienceForm" : "shrunk experienceForm"
             }
           >
             <ExperienceContentForm
@@ -307,10 +312,13 @@ function App() {
     return (
       <ul>
         {allJobs.map(job => (
-          <li key={job.name + job.company}>
+          <li key={job.id}>
             <Dropdown
               text={jobDropDownHTML(job.jobTitle, job.jobCompany)}
               content={experienceDropdownEditForm(job.id, job.jobTitle, job.jobCompany, job.jobLocation, job.jobDate)}
+              topShrink= {addExperienceShrink}
+              topSetShrink= {setAddExperienceShrink}
+              id={job.id} 
               />
           </li>
         ))}
@@ -371,6 +379,8 @@ function App() {
             addExperienceShrink,
             setAddExperienceShrink
           )}
+          topShrink = {addExperienceShrink}
+          topSetShrink = {setAddExperienceShrink}
         />
         <Dropdown text="Education" content={dropContent} />
         <Dropdown text="Skills" content={dropContent} />

@@ -8,7 +8,21 @@ function AddButton({textContent, shrink, setShrink}) {
 
     
     function handleAddClick() {
-        setShrink(!shrink)
+        if (shrink[1] != 'add') {
+            setShrink(["AO", 'add'])
+        }
+        else {
+            setShrink(["AO", ''])
+        }
+    }
+
+    function shrinkHandler() {
+        if (shrink[1] === 'add') {
+            return true
+        }
+        else {
+            return false
+        }
     }
     
     return (
@@ -16,7 +30,7 @@ function AddButton({textContent, shrink, setShrink}) {
         // <div className="experienceDrop">
             // <div className="addExperienceButton">
                 <button className="createNewDropD" onClick={handleAddClick}>
-                    <Icon path={mdiChevronDown} className={shrink ? 'inactiveSC subChevron' : 'activeSC subChevron'} />
+                    <Icon path={mdiChevronDown} className={shrinkHandler() ? 'activeSC subChevron' : 'inactiveSC subChevron'} />
                     {textContent}
                 </button>
         //         <div className={shrink ? 'experienceForm' : 'shrunk experienceForm'}><ExperienceContentForm hidden={shrink} jobs={allJobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/></div>

@@ -55,7 +55,8 @@ function ExperienceContentForm({allJobs, setjobList, nextId, setnewNextId, setSh
 
 
   function shrinkForm() {
-    setShrink(!shrink)
+
+    setShrink(["AO", ""])
   }
 
   function saveHandler(e) {
