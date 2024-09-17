@@ -5,6 +5,7 @@ import LongFormInput from "./LongFormInput";
 import ExperienceContentForm from "./ExperienceContent";
 import AddButton from "./AddButton";
 import { useState } from "react";
+import EduContentForm from "./EduContentForm";
 
 const dropContent = (
   <>
@@ -80,7 +81,6 @@ function summaryContent(summaryHook) {
 //
 // un nest add button. no components withing components
 
-
 // take out default state and apply them to html conditionally
 function App() {
   const [firstName, setFirstName] = useState("$$PREValue$$");
@@ -91,7 +91,7 @@ function App() {
   const [address, setAddress] = useState("$$PREValue$$");
   const [summary, setSummary] = useState("$$PREValue$$");
 
-  const [addExperienceShrink, setAddExperienceShrink] = useState(["AC", '']);
+  const [addExperienceShrink, setAddExperienceShrink] = useState(["AC", ""]);
   // const [experienceShrink, setExperienceShrink] = useState(true)
   const [nextId, setnewNextId] = useState(0);
   const [allJobs, setjobList] = useState([
@@ -115,7 +115,25 @@ function App() {
       jobCompany: "McBurgers and McComputers",
       jobLocation: "San Jose, CA, USA",
       jobDate: "1923 - 1965",
-    }
+    },
+  ]);
+
+  const [nextEduId, setnewNextEduId] = useState(0);
+  const [allEdu, setEduList] = useState([
+    {
+      idEdu: "0a",
+      study: "Ph.D. - Micro Computer Engineering",
+      school: "A Fake University",
+      schoolDate: "1923 - 1933",
+      schoolLocation: "Berlin, Germany",
+    },
+    {
+      idEdu: "0b",
+      study: "Master in Pre-Flight Flying",
+      school: "Birdman College",
+      schoolDate: "1905 - 1920",
+      schoolLocation: "Rio de Janeiro, Brazil",
+    },
   ]);
 
   // function sum(...theArgs) {
@@ -126,12 +144,11 @@ function App() {
   //   return total;
   // }
   // populate headings only if there is some content entered
-  function addExpShrinkHandler() {
-    if (addExperienceShrink[1] === 'add') {
-      return true
-    }
-    else {
-      return false
+  function shrinkHandler(state) {
+    if (state[1] === "add") {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -143,7 +160,6 @@ function App() {
     addExperienceShrink,
     setAddExperienceShrink
   ) {
-  
     return (
       <div className="experienceInputContainer">
         <div className="experienceDrop">
@@ -153,9 +169,10 @@ function App() {
             setShrink={setAddExperienceShrink}
           />
           <div
-  
             className={
-              addExpShrinkHandler() ? "experienceForm" : "shrunk experienceForm"
+              shrinkHandler(addExperienceShrink)
+                ? "experienceForm"
+                : "shrunk experienceForm"
             }
           >
             <ExperienceContentForm
@@ -166,16 +183,13 @@ function App() {
               shrink={addExperienceShrink}
               setShrink={setAddExperienceShrink}
             />
-          </div> 
+          </div>
         </div>
-        <div className="experienceEditsDDs">
-          {createExperienceDD()}
-        </div>
+        <div className="experienceEditsDDs">{createExperienceDD()}</div>
       </div>
     );
   }
 
-  
   function createHeading(headingText, ...blankCheck) {
     const hasValue = (obj, value) => Object.values(obj).includes(value);
 
@@ -253,87 +267,148 @@ function App() {
           <h3 className="jobDDTitle">{job}</h3>
           <h5 className="jobDDCompany">{company}</h5>
         </div>
-        <div className="jobDDIcons">
-        {/* add hide and delete icons */}
-        </div>
+        <div className="jobDDIcons">{/* add hide and delete icons */}</div>
       </div>
-    )
+    );
   }
 
   function findIDIndex(id) {
-    if(id != '') {
+    if (id != "") {
       let k = "id";
       let val = id;
-      let objIndex = allJobs.findIndex(
-        (job) => job[k] === val
-  );
-    return objIndex
-  }
+      let objIndex = allJobs.findIndex((job) => job[k] === val);
+      return objIndex;
+    }
   }
 
   function editJob(selectedID, editTitle, editCompany, editLocation, editDate) {
-    let jobIndex = findIDIndex(selectedID)
-    let newJobs = [...allJobs]
+    let jobIndex = findIDIndex(selectedID);
+    let newJobs = [...allJobs];
     newJobs[jobIndex] = {
-        id: selectedID,
-        jobTitle: editTitle,
-        jobCompany: editCompany,
-        jobLocation: editLocation,
-        jobDate: editDate
-    }
+      id: selectedID,
+      jobTitle: editTitle,
+      jobCompany: editCompany,
+      jobLocation: editLocation,
+      jobDate: editDate,
+    };
 
-    setjobList(newJobs)
+    setjobList(newJobs);
   }
 
-  function experienceDropdownEditForm(inputID, editTitle, editCompany, editLocation, editDate) {
+  function experienceDropdownEditForm(
+    inputID,
+    editTitle,
+    editCompany,
+    editLocation,
+    editDate
+  ) {
     return (
       <div className="expDDFs">
         <div className="formBasicInput">
-          <label htmlFor={inputID + 'edit'}>{"Job Title"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editTitle} onChange={(event) => editJob(inputID, event.target.value, editCompany, editLocation, editDate)} />
+          <label htmlFor={inputID + "edit"}>{"Job Title"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editTitle}
+            onChange={(event) =>
+              editJob(
+                inputID,
+                event.target.value,
+                editCompany,
+                editLocation,
+                editDate
+              )
+            }
+          />
         </div>
         <div className="formBasicInput">
-          <label htmlFor={inputID + 'edit'}>{"Company"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editCompany} onChange={(event) => editJob(inputID, editTitle, event.target.value, editLocation, editDate)} />
+          <label htmlFor={inputID + "edit"}>{"Company"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editCompany}
+            onChange={(event) =>
+              editJob(
+                inputID,
+                editTitle,
+                event.target.value,
+                editLocation,
+                editDate
+              )
+            }
+          />
         </div>
         <div className="formBasicInput">
-          <label htmlFor={inputID + 'edit'}>{"Location"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editLocation} onChange={(event) => editJob(inputID, editTitle, editCompany, event.target.value, editDate)} />
+          <label htmlFor={inputID + "edit"}>{"Location"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editLocation}
+            onChange={(event) =>
+              editJob(
+                inputID,
+                editTitle,
+                editCompany,
+                event.target.value,
+                editDate
+              )
+            }
+          />
         </div>
         <div className="formBasicInput">
-          <label htmlFor={inputID + 'edit'}>{"Date"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editDate} onChange={(event) => editJob(inputID, editTitle, editCompany, editLocation, event.target.value)} />
+          <label htmlFor={inputID + "edit"}>{"Date"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editDate}
+            onChange={(event) =>
+              editJob(
+                inputID,
+                editTitle,
+                editCompany,
+                editLocation,
+                event.target.value
+              )
+            }
+          />
         </div>
       </div>
-    )
+    );
   }
 
   function createExperienceDD() {
     return (
       <ul>
-        {allJobs.map(job => (
+        {allJobs.map((job) => (
           <li key={job.id}>
             <Dropdown
               text={jobDropDownHTML(job.jobTitle, job.jobCompany)}
-              content={experienceDropdownEditForm(job.id, job.jobTitle, job.jobCompany, job.jobLocation, job.jobDate)}
-              topShrink= {addExperienceShrink}
-              topSetShrink= {setAddExperienceShrink}
-              id={job.id} 
-              />
+              content={experienceDropdownEditForm(
+                job.id,
+                job.jobTitle,
+                job.jobCompany,
+                job.jobLocation,
+                job.jobDate
+              )}
+              topShrink={addExperienceShrink}
+              topSetShrink={setAddExperienceShrink}
+              id={job.id}
+            />
           </li>
         ))}
-
       </ul>
-    )
+    );
   }
 
   function createExperienceCVContent() {
-
     return (
       <ul className="cvJobBodyContainer">
-        {allJobs.map(job => (
-          
-          <li key={'cv' + job.id} className="cvJobLi" >
+        {allJobs.map((job) => (
+          <li key={"cv" + job.id} className="cvJobLi">
             {/* {console.log(job)} */}
             <h3 className="cvJobTitle">{job.jobTitle}</h3>
             <h4 className="cvCompanyName">{job.jobCompany}</h4>
@@ -343,9 +418,231 @@ function App() {
             </div>
           </li>
         ))}
-
       </ul>
-    )
+    );
+  }
+
+  // Altering experience content into education content as they are similar in structure
+  const [eduShrink, setEduShrink] = useState(["AC", ""]);
+  // const [nextEduId, setnewNextEduId] = useState(0);
+  // const [allEdu, setEduList] = useState([
+  //   {
+  //     idEdu: "0a",
+  //     study: "Ph.D. - Micro Computer Engineering",
+  //     school: "A Fake University",
+  //     schoolDate: "1923 - 1933",
+  //     schoolLocation: "Berlin, Germany"
+
+  //   },
+  //   {
+  //     idEdu: "0b",
+  //     study: "Master in Pre-Flight Flying",
+  //     school: "Birdman College",
+  //     schoolDate: "1905 - 1920",
+  //     schoolLocation: "Rio de Janeiro, Brazil"
+  //   }
+
+  // ]);
+  function educationContent(
+    allEdu,
+    setEduList,
+    nextEduId,
+    setnewNextEduId,
+    eduShrink,
+    setEduShrink
+  ) {
+    return (
+      <div className="experienceInputContainer">
+        <div className="experienceDrop">
+          <AddButton
+            textContent="Add Experience"
+            shrink={eduShrink}
+            setShrink={setEduShrink}
+          />
+          <div
+            className={
+              shrinkHandler(eduShrink)
+                ? "experienceForm"
+                : "shrunk experienceForm"
+            }
+          >
+            <EduContentForm
+              allEdu={allEdu}
+              setEduList={setEduList}
+              nextEduId={nextEduId}
+              setnewNextEduId={setnewNextEduId}
+              shrink={eduShrink}
+              setShrink={setEduShrink}
+            />
+          </div>
+        </div>
+        <div className="experienceEditsDDs">{createEduDD()}</div>
+      </div>
+    );
+  }
+
+  function eduDropDownHTML(edu, company) {
+    return (
+      <div className="eduDDContainer">
+        <div className="eduDD">
+          <h3 className="eduDDTitle">{edu}</h3>
+          <h5 className="eduDDCompany">{company}</h5>
+        </div>
+        <div className="eduDDIcons">{/* add hide and delete icons */}</div>
+      </div>
+    );
+  }
+
+  function findIDIndexEdu(id) {
+    if (id != "") {
+      let k = "idEdu";
+      let val = id;
+      let objIndex = allEdu.findIndex((edu) => edu[k] === val);
+      return objIndex;
+    }
+  }
+
+  function editEdu(selectedID, editStudy, editSchool, editLocation, editDate) {
+    console.log('variables', selectedID, editStudy, editSchool, editLocation, editDate)
+    let eduIndex = findIDIndexEdu(selectedID);
+    console.log('edu index', eduIndex)
+    let newEdus = [...allEdu];
+    newEdus[eduIndex] = {
+      idEdu: selectedID,
+      study: editStudy,
+      school: editSchool,
+      schoolLocation: editLocation,
+      schoolDate: editDate,
+    };
+    console.log('newEdus', newEdus)
+    setEduList(newEdus);
+  }
+
+  function eduDropdownEditForm(
+    inputID,
+    editStudy,
+    editSchool,
+    editLocation,
+    editDate
+  ) {
+    return (
+      <div className="expDDFs">
+        <div className="formBasicInput">
+          <label htmlFor={inputID + "edit"}>{"Degree/Studies"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editStudy}
+            onChange={(event) =>
+              editEdu(
+                inputID,
+                event.target.value,
+                editSchool,
+                editLocation,
+                editDate
+              )
+            }
+          />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + "edit"}>{"School"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editSchool}
+            onChange={(event) =>
+              editEdu(
+                inputID,
+                editStudy,
+                event.target.value,
+                editLocation,
+                editDate
+              )
+            }
+          />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + "edit"}>{"Location"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editLocation}
+            onChange={(event) =>
+              editEdu(
+                inputID,
+                editStudy,
+                editSchool,
+                event.target.value,
+                editDate
+              )
+            }
+          />
+        </div>
+        <div className="formBasicInput">
+          <label htmlFor={inputID + "edit"}>{"Date"}</label>
+          <input
+            className="singleLineInput"
+            type="text"
+            /*id={inputID}*/ name={inputID + "edit"}
+            value={editDate}
+            onChange={(event) =>
+              editEdu(
+                inputID,
+                editStudy,
+                editSchool,
+                editLocation,
+                event.target.value
+              )
+            }
+          />
+        </div>
+      </div>
+    );
+  }
+
+  function createEduDD() {
+    return (
+      <ul>
+        {allEdu.map((edu) => (
+          <li key={edu.idEdu}>
+            <Dropdown
+              text={eduDropDownHTML(edu.study, edu.school)}
+              content={eduDropdownEditForm(
+                edu.idEdu,
+                edu.study,
+                edu.school,
+                edu.schoolDate,
+                edu.schoolLocation
+              )}
+              topShrink={eduShrink}
+              topSetShrink={setEduShrink}
+              id={edu.idEdu}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  function createEduCVContent() {
+    return (
+      <ul className="cvEduBodyContainer">
+        {allEdu.map((edu) => (
+          <li key={"cv" + edu.idEdu} className="cvEduLi">
+            {/* {console.log(job)} */}
+            <h3 className="cvJobTitle">{edu.study}</h3>
+            <h4 className="cvCompanyName">{edu.school}</h4>
+            <div className="cvBottomLine">
+              <p className="cvLocation">{edu.schoolLocation}</p>
+              <p className="cvDate">{edu.schoolDate}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   return (
@@ -379,10 +676,22 @@ function App() {
             addExperienceShrink,
             setAddExperienceShrink
           )}
-          topShrink = {addExperienceShrink}
-          topSetShrink = {setAddExperienceShrink}
+          topShrink={addExperienceShrink}
+          topSetShrink={setAddExperienceShrink}
         />
-        <Dropdown text="Education" content={dropContent} />
+        <Dropdown
+          text="Education"
+          content={educationContent(
+            allEdu,
+            setEduList,
+            nextEduId,
+            setnewNextEduId,
+            eduShrink,
+            setEduShrink
+          )}
+          topShrink={eduShrink}
+          topSetShrink={setEduShrink}
+        />
         <Dropdown text="Skills" content={dropContent} />
       </div>
 
@@ -412,9 +721,7 @@ function App() {
             <h2 className="cvHeading">
               {createHeading("Experience", { allJobs })}
             </h2>
-            <div className="workHistoryBody">
-              {createExperienceCVContent()}
-            </div>
+            <div className="workHistoryBody">{createExperienceCVContent()}</div>
           </div>
         </div>
 
@@ -436,7 +743,9 @@ function App() {
                 </p>
               </div>
               <div className="cvPhoneContainer">
-                <div className="svgContainer">{addIcon(getPhoneIcon(), phone)}</div>
+                <div className="svgContainer">
+                  {addIcon(getPhoneIcon(), phone)}
+                </div>
                 <p className="cvPhone">
                   {defaultCreator(phone, "905-555-5555")}
                 </p>
@@ -454,7 +763,12 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="cvEducation"></div>
+          <div className="cvEducation">
+            <h2 className="cvHeading">
+              {createHeading("Education", { allEdu })}
+            </h2>
+            <div className="eduHistoryBody">{createEduCVContent()}</div>
+          </div>
           <div className="cvSkills"></div>
         </div>
       </div>
