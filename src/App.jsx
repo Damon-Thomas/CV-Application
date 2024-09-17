@@ -243,9 +243,14 @@ function App() {
 
   function jobDropDownHTML(job, company) {
     return (
-      <div className="jobDD">
-        <h3 className="jobDDTitle">{job}</h3>
-        <h5 className="jobDDCompany">{company}</h5>
+      <div className="jobDDContainer">
+        <div className="jobDD">
+          <h3 className="jobDDTitle">{job}</h3>
+          <h5 className="jobDDCompany">{company}</h5>
+        </div>
+        <div className="jobDDIcons">
+        {/* add hide and delete icons */}
+        </div>
       </div>
     )
   }
@@ -280,19 +285,19 @@ function App() {
       <div className="expDDFs">
         <div className="formBasicInput">
           <label htmlFor={inputID + 'edit'}>{"Job Title"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editTitle} onChange={(event) => editJob(selectedID, event.target.value, editCompany, editLocation, editDate)} />
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editTitle} onChange={(event) => editJob(inputID, event.target.value, editCompany, editLocation, editDate)} />
         </div>
         <div className="formBasicInput">
           <label htmlFor={inputID + 'edit'}>{"Company"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editCompany} onChange={(event) => editJob(selectedID, editTitle, event.target.value, editLocation, editDate)} />
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editCompany} onChange={(event) => editJob(inputID, editTitle, event.target.value, editLocation, editDate)} />
         </div>
         <div className="formBasicInput">
           <label htmlFor={inputID + 'edit'}>{"Location"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editLocation} onChange={(event) => editJob(selectedID, editTitle, editCompany, event.target.value, editDate)} />
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editLocation} onChange={(event) => editJob(inputID, editTitle, editCompany, event.target.value, editDate)} />
         </div>
         <div className="formBasicInput">
           <label htmlFor={inputID + 'edit'}>{"Date"}</label>
-          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editDate} onChange={(event) => editJob(selectedID, editTitle, editCompany, editLocation, event.target.value)} />
+          <input className="singleLineInput" type="text" /*id={inputID}*/ name={inputID + 'edit'} value={editDate} onChange={(event) => editJob(inputID, editTitle, editCompany, editLocation, event.target.value)} />
         </div>
       </div>
     )
@@ -304,7 +309,7 @@ function App() {
         {allJobs.map(job => (
           <li key={job.name + job.company}>
             <Dropdown
-              text={jobDropDownHTML(job.name, job.company)}
+              text={jobDropDownHTML(job.jobTitle, job.jobCompany)}
               content={experienceDropdownEditForm(job.id, job.jobTitle, job.jobCompany, job.jobLocation, job.jobDate)}
               />
           </li>
@@ -321,7 +326,7 @@ function App() {
         {allJobs.map(job => (
           
           <li key={'cv' + job.id} className="cvJobLi" >
-            {console.log(job)}
+            {/* {console.log(job)} */}
             <h3 className="cvJobTitle">{job.jobTitle}</h3>
             <h4 className="cvCompanyName">{job.jobCompany}</h4>
             <div className="cvBottomLine">

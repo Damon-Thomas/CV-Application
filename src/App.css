@@ -16,31 +16,35 @@
 
 @media print {
 
-    @page {
-      /* margin-top: 0;
+  @page {
+    /* margin-top: 0;
       margin-bottom: 0; */
-      margin: 0;
-    }
-    body {
-      /* padding-top: 72px;
+    margin: 0;
+  }
+
+  body {
+    /* padding-top: 72px;
       padding-bottom: 72px ; */
-      -webkit-print-color-adjust: exact; /* Prevents color changes */
-        print-color-adjust: exact; /* For other browsers */
-      
-    }
+    -webkit-print-color-adjust: exact;
+    /* Prevents color changes */
+    print-color-adjust: exact;
+    /* For other browsers */
 
-    
+  }
 
-  .main>.userOutput{
+
+
+  .main>.userOutput {
     background-color: white;
     margin: 0;
     min-width: 100vw
   }
-  .userOutput>.col2{
+
+  .userOutput>.col2 {
     background-color: #213547;
   }
-  
-  
+
+
 
   .main>.noPrint {
     display: none;
@@ -82,7 +86,18 @@
 }
 
 .experienceContentContainer .formBasicInput {
-  width: clamp(200px, calc((50vw - 7em) / 2), 600px);
+  width: clamp(200px, calc((50vw - 7em) / 2), 1000px);
+}
+
+.expDDFs{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.expDDFs .formBasicInput {
+  width: clamp(200px, calc((50vw - 9em) / 2), 1000px)
+
 }
 
 .experienceContentContainer .dropdownButton {
@@ -147,17 +162,21 @@
 
 }
 
-.cvAddressContainer, .cvPhoneContainer, .cvEmailContainer {
+.cvAddressContainer,
+.cvPhoneContainer,
+.cvEmailContainer {
   display: flex;
   align-items: center;
   gap: .5em;
 }
+
 .svgContainer {
   width: 2rem;
   height: auto;
   display: flex;
   align-items: center;
 }
+
 /* svg.contactIcon {
   width: 1em;
   height: calc(1em +.25vw) ;
@@ -169,6 +188,7 @@
   height: 1.75rem;
   fill: white;
 }
+
 .col2 {
   padding: calc(1em + .1vw);
   color: #ffffff;
@@ -197,37 +217,71 @@
 .experienceDrop .experienceForm {
   display: flex;
 }
+
 .experienceDrop .shrunk {
   display: none;
 }
 
-.cvJobBodyContainer{
+.cvJobBodyContainer {
   display: flex;
   flex-direction: column;
   gap: .5em;
   /* padding-top: .5em; */
 }
+
 .cvJobLi {
   list-style-type: none;
 }
 
-.cvJobTitle{
+.cvJobTitle {
   font-size: 1.5em;
   font-weight: 800;
 }
 
-.cvCompanyName{
+.cvCompanyName {
   font-size: 1em;
   font-weight: 700;
 }
 
-.cvBottomLine{
+.cvBottomLine {
   display: flex;
   justify-content: space-between;
 }
 
-.cvLocation, .cvDate {
+.cvLocation,
+.cvDate {
   font-size: 1em;
 }
 
+.experienceEditsDDs {
+  padding: 1em;
 
+}
+
+.experienceEditsDDs>ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.jobDD {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.jobDDTitle {
+  font-size: .75em;
+  font-weight: 700;
+}
+
+.jobDDCompany {
+  font-size: .5em;
+}
+
+li>.dropDown>.dropdownButton {
+  display: flex;
+  gap: 2em;
+  justify-content: start;
+}
