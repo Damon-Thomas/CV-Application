@@ -38,7 +38,7 @@ function Dropdown({text, content = '', topShrink = '', topSetShrink = '', id = '
             <button className='dropdownButton' onClick={handleDropClick}>
                 <Icon path={mdiChevronDown} className={shrinkHandler() ? 'inactiveDD chevron' : 'activeDD chevron'} />
                 <h2>{text}</h2>
-                <div className="dropEmpty"></div>
+                
             </button>
             <div className={shrinkHandler() ? 'shrunk content' : 'content'}   >
                 {content}

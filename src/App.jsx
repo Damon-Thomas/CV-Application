@@ -4,8 +4,11 @@ import FormInput from "./FormInput";
 import LongFormInput from "./LongFormInput";
 import ExperienceContentForm from "./ExperienceContent";
 import AddButton from "./AddButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EduContentForm from "./EduContentForm";
+
+// Edit css for education section on CV. Further test section for bugs
+//Contine to skills section
 
 const dropContent = (
   <>
@@ -93,7 +96,7 @@ function App() {
 
   const [addExperienceShrink, setAddExperienceShrink] = useState(["AC", ""]);
   // const [experienceShrink, setExperienceShrink] = useState(true)
-  const [nextId, setnewNextId] = useState(0);
+  const [nextId, setnewNextId] = useState(1);
   const [allJobs, setjobList] = useState([
     {
       id: "0a",
@@ -118,7 +121,7 @@ function App() {
     },
   ]);
 
-  const [nextEduId, setnewNextEduId] = useState(0);
+  const [nextEduId, setnewNextEduId] = useState(1);
   const [allEdu, setEduList] = useState([
     {
       idEdu: "0a",
@@ -260,29 +263,104 @@ function App() {
     );
   }
 
-  function jobDropDownHTML(job, company) {
+  
+
+  function getEyeIcon() {
+    return (
+      
+      <svg
+        className="DDIcon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
+      </svg>
+    );
+  }
+
+  function getHiddenEyeIcon() {
+    return (
+      <svg
+        className="DDIcon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z" />
+      </svg>
+    );
+  }
+
+  function getDeleteIcon() {
+    return (
+      <svg
+        className="DDIcon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8.46,11.88L9.87,10.47L12,12.59L14.12,10.47L15.53,11.88L13.41,14L15.53,16.12L14.12,17.53L12,15.41L9.88,17.53L8.47,16.12L10.59,14L8.46,11.88M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" />
+      </svg>
+    );
+  }
+
+  function deletebyId(id, list, setNew, idName) {
+    console.log('delete fire', id)
+    let newJobList = [...list]
+    console.log('pre', newJobList)
+    newJobList.splice(findIDIndex(id, idName, list),1) 
+    console.log('post', newJobList)
+    setjobList(newJobList)
+    console.log('setnew', setNew)
+    console.log('post post', allJobs)
+    
+
+  }
+
+  //fix delete button functionality. It won't save the changes to state
+  //styling thrown off
+
+
+
+
+  function jobDropDownHTML(job, company, id) {
     return (
       <div className="jobDDContainer">
         <div className="jobDD">
           <h3 className="jobDDTitle">{job}</h3>
           <h5 className="jobDDCompany">{company}</h5>
         </div>
-        <div className="jobDDIcons">{/* add hide and delete icons */}</div>
+        <div className="jobDDIcons">
+          <div className="deleteIcon" data-job={job} data-company={company} data-id={id}  >{getDeleteIcon()}</div> 
+          
+        </div>
       </div>
     );
   }
 
-  function findIDIndex(id) {
+  useEffect(() => {
+    let deleteIcons = document.querySelectorAll('.deleteIcon')
+    console.log(deleteIcons)
+    deleteIcons.forEach(element => {
+      element.addEventListener('click', (event) => {
+        console.log('element', element, 'test', event)
+        deletebyId(element.dataset.id, allJobs, setjobList, "id")
+    });
+    
+    });
+  }, []);
+  
+  
+
+  function findIDIndex(id, idName, list) {
     if (id != "") {
-      let k = "id";
+      let k = idName;
       let val = id;
-      let objIndex = allJobs.findIndex((job) => job[k] === val);
+      let objIndex = list.findIndex((item) => item[k] === val);
       return objIndex;
     }
   }
 
   function editJob(selectedID, editTitle, editCompany, editLocation, editDate) {
-    let jobIndex = findIDIndex(selectedID);
+    let jobIndex = findIDIndex(selectedID, 'id', allJobs);
     let newJobs = [...allJobs];
     newJobs[jobIndex] = {
       id: selectedID,
@@ -386,7 +464,7 @@ function App() {
         {allJobs.map((job) => (
           <li key={job.id}>
             <Dropdown
-              text={jobDropDownHTML(job.jobTitle, job.jobCompany)}
+              text={jobDropDownHTML(job.jobTitle, job.jobCompany, job.id)}
               content={experienceDropdownEditForm(
                 job.id,
                 job.jobTitle,
@@ -424,25 +502,7 @@ function App() {
 
   // Altering experience content into education content as they are similar in structure
   const [eduShrink, setEduShrink] = useState(["AC", ""]);
-  // const [nextEduId, setnewNextEduId] = useState(0);
-  // const [allEdu, setEduList] = useState([
-  //   {
-  //     idEdu: "0a",
-  //     study: "Ph.D. - Micro Computer Engineering",
-  //     school: "A Fake University",
-  //     schoolDate: "1923 - 1933",
-  //     schoolLocation: "Berlin, Germany"
 
-  //   },
-  //   {
-  //     idEdu: "0b",
-  //     study: "Master in Pre-Flight Flying",
-  //     school: "Birdman College",
-  //     schoolDate: "1905 - 1920",
-  //     schoolLocation: "Rio de Janeiro, Brazil"
-  //   }
-
-  // ]);
   function educationContent(
     allEdu,
     setEduList,
@@ -493,19 +553,26 @@ function App() {
     );
   }
 
-  function findIDIndexEdu(id) {
-    if (id != "") {
-      let k = "idEdu";
-      let val = id;
-      let objIndex = allEdu.findIndex((edu) => edu[k] === val);
-      return objIndex;
-    }
-  }
+  // function findIDIndexEdu(id, ) {
+  //   if (id != "") {
+  //     let k = "idEdu";
+  //     let val = id;
+  //     let objIndex = allEdu.findIndex((edu) => edu[k] === val);
+  //     return objIndex;
+  //   }
+  // }
 
   function editEdu(selectedID, editStudy, editSchool, editLocation, editDate) {
-    console.log('variables', selectedID, editStudy, editSchool, editLocation, editDate)
-    let eduIndex = findIDIndexEdu(selectedID);
-    console.log('edu index', eduIndex)
+    console.log(
+      "variables",
+      selectedID,
+      editStudy,
+      editSchool,
+      editLocation,
+      editDate
+    );
+    let eduIndex = findIDIndex(selectedID, 'idEdu', allEdu);
+    console.log("edu index", eduIndex);
     let newEdus = [...allEdu];
     newEdus[eduIndex] = {
       idEdu: selectedID,
@@ -514,7 +581,7 @@ function App() {
       schoolLocation: editLocation,
       schoolDate: editDate,
     };
-    console.log('newEdus', newEdus)
+    console.log("newEdus", newEdus);
     setEduList(newEdus);
   }
 
@@ -614,8 +681,8 @@ function App() {
                 edu.idEdu,
                 edu.study,
                 edu.school,
-                edu.schoolDate,
-                edu.schoolLocation
+                edu.schoolLocation,
+                edu.schoolDate
               )}
               topShrink={eduShrink}
               topSetShrink={setEduShrink}
@@ -633,11 +700,11 @@ function App() {
         {allEdu.map((edu) => (
           <li key={"cv" + edu.idEdu} className="cvEduLi">
             {/* {console.log(job)} */}
-            <h3 className="cvJobTitle">{edu.study}</h3>
-            <h4 className="cvCompanyName">{edu.school}</h4>
+            <h3 className="cvEduTitle">{edu.study}</h3>
+            <h4 className="cvSchoolName">{edu.school}</h4>
             <div className="cvBottomLine">
-              <p className="cvLocation">{edu.schoolLocation}</p>
-              <p className="cvDate">{edu.schoolDate}</p>
+              <p className="cvEduLocation">{edu.schoolLocation}</p>
+              <p className="cvEduDate">{edu.schoolDate}</p>
             </div>
           </li>
         ))}

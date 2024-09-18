@@ -42,6 +42,7 @@
 
   .userOutput>.col2 {
     background-color: #213547;
+    
   }
 
 
@@ -193,6 +194,9 @@
   padding: calc(1em + .1vw);
   color: #ffffff;
   background-color: #213547;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
 }
 
 .col2 p,
@@ -229,7 +233,7 @@
   /* padding-top: .5em; */
 }
 
-.cvJobLi {
+.cvJobLi, .cvEduLi {
   list-style-type: none;
 }
 
@@ -264,19 +268,25 @@
   flex-direction: column;
   gap: 1em;
 }
+.jobDDContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.jobDD {
+.jobDD, .eduDD {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.jobDDTitle {
+.jobDDTitle, .eduDDTitle {
   font-size: .75em;
   font-weight: 700;
 }
 
-.jobDDCompany {
+.jobDDCompany, .eduDDCompany {
   font-size: .5em;
 }
 
@@ -285,3 +295,39 @@ li>.dropDown>.dropdownButton {
   gap: 2em;
   justify-content: start;
 }
+
+.cvEduLi {
+  display: flex;
+  flex-direction: column;
+}
+
+.cvEduTitle {
+  font-size: 1em;
+  font-weight: 800;
+  line-height: 1.2;
+  padding-bottom: .1em;
+  /* border-bottom: 1px solid white; */
+}
+
+.cvSchoolName {
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.cvEduBodyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.DDIcon {
+  color: #213547;
+  width: 2em;
+  height: auto;
+}
+
+
+
+
+
+
