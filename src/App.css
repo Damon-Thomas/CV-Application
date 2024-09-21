@@ -10,6 +10,11 @@
     display: flex;
     flex-direction: column;
   }
+  .formBasicInput {
+    width: clamp(200px, calc((100vw - 9em) / 2), 1000px)
+    !important;
+    color: #213547;
+  }
 }
 
 
@@ -121,7 +126,8 @@
 }
 
 .idForm,
-.experienceForm {
+.experienceForm, 
+.skillForm {
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
@@ -226,6 +232,10 @@
   display: none;
 }
 
+.skillDrop .shrunk {
+  display: none;
+}
+
 .cvJobBodyContainer {
   display: flex;
   flex-direction: column;
@@ -271,7 +281,7 @@
 .jobDDContainer {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
 }
 

@@ -1,0 +1,29 @@
+.addSkillForm > .formBasicInput {
+    
+    width: clamp(200px, calc((50vw - 9em) / 2), 600px);
+      
+}
+
+.skillForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+}
+
+.addSkillForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1em;
+    
+}
+
+.submitSkill, .cancelSkill {
+    width: calc(1em + 12.5vw);
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 2em;
+}

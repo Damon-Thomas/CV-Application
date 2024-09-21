@@ -33,7 +33,7 @@ function AddButton({textContent, shrink, setShrink}) {
                     <Icon path={mdiChevronDown} className={shrinkHandler() ? 'activeSC subChevron' : 'inactiveSC subChevron'} />
                     {textContent}
                 </button>
-        //         <div className={shrink ? 'experienceForm' : 'shrunk experienceForm'}><ExperienceContentForm hidden={shrink} jobs={allJobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/></div>
+                // <div className={shrink ? 'experienceForm' : 'shrunk experienceForm'}><ExperienceContentForm hidden={shrink} jobs={allJobs} setjobList={setjobList} nextId={nextId} setnewNextId={setnewNextId}/></div>
         //     </div>
 
 
